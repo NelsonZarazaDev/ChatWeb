@@ -1,0 +1,351 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+CAUTION: Do not modify this file unless you know what you are doing.
+ Unexpected results may occur if the code is changed deliberately.
+-->
+<dbmodel pgmodeler-ver="1.2.3" use-changelog="false" max-obj-count="10"
+	 gen-disabled-objs-code="false" show-sys-schemas-rects="true"
+	 last-position="0,71" last-zoom="0.75"
+	 default-schema="public" default-owner="postgres"
+	 layers="Default layer"
+	 active-layers="0"
+	 layer-name-colors="#000000"
+	 layer-rect-colors="#b4b4b4"
+	 show-layer-names="false" show-layer-rects="false">
+<database name="new_database" is-template="false" allow-conns="true">
+</database>
+
+<schema name="public" layers="0" fill-color="#e1e1e1" name-color="#000000" sql-disabled="true">
+</schema>
+
+<table name="users" layers="0" collapse-mode="2" max-obj-count="12" z-value="0">
+	<schema name="public"/>
+	<role name="postgres"/>
+	<position x="100" y="120"/>
+	<column name="id" not-null="true" default-value="gen_random_uuid()">
+		<type name="uuid" length="0"/>
+	</column>
+	<column name="first_name" not-null="true">
+		<type name="varchar" length="50"/>
+	</column>
+	<column name="last_name" not-null="true">
+		<type name="varchar" length="50"/>
+	</column>
+	<column name="gender">
+		<type name="varchar" length="1"/>
+	</column>
+	<column name="email" not-null="true">
+		<type name="varchar" length="150"/>
+	</column>
+	<column name="phone_number">
+		<type name="varchar" length="15"/>
+	</column>
+	<column name="status" not-null="true" default-value="true">
+		<type name="boolean" length="0"/>
+	</column>
+	<column name="created_at" not-null="true" default-value="now()">
+		<type name="timestamptz" length="0"/>
+	</column>
+	<column name="updated_at" not-null="true" default-value="now()">
+		<type name="timestamptz" length="0"/>
+	</column>
+	<column name="deleted_at">
+		<type name="timestamptz" length="0"/>
+	</column>
+	<constraint name="users_pk" type="pk-constr" table="public.users">
+		<columns names="id" ref-type="src-columns"/>
+	</constraint>
+	<constraint name="UQ_EMAIL" type="uq-constr" table="public.users">
+		<columns names="email" ref-type="src-columns"/>
+	</constraint>
+	<constraint name="UQ_PHONE_NUMBER" type="uq-constr" table="public.users">
+		<columns names="phone_number" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<table name="chat" layers="0" collapse-mode="2" max-obj-count="8" z-value="0">
+	<schema name="public"/>
+	<role name="postgres"/>
+	<position x="1140" y="320"/>
+	<column name="id" not-null="true" default-value="gen_random_uuid()">
+		<type name="uuid" length="0"/>
+	</column>
+	<column name="name">
+		<type name="varchar" length="50"/>
+	</column>
+	<column name="type" not-null="true">
+		<type name="varchar" length="20"/>
+	</column>
+	<column name="id_user_created_by" not-null="true">
+		<type name="uuid" length="0"/>
+	</column>
+	<column name="created_at" not-null="true" default-value="now()">
+		<type name="timestamptz" length="0"/>
+	</column>
+	<column name="updated_at" not-null="true" default-value="now()">
+		<type name="timestamptz" length="0"/>
+	</column>
+	<column name="deleted_at">
+		<type name="timestamptz" length="0"/>
+	</column>
+	<constraint name="chat_pk" type="pk-constr" table="public.chat">
+		<columns names="id" ref-type="src-columns"/>
+	</constraint>
+	<constraint name="chk_chat_type" type="ck-constr" table="public.chat">
+			<expression> <![CDATA[type IN ('DIRECT', 'GROUP')]]> </expression>
+	</constraint>
+</table>
+
+<table name="messages" layers="0" collapse-mode="2" max-obj-count="8" z-value="0">
+	<schema name="public"/>
+	<role name="postgres"/>
+	<position x="100" y="540"/>
+	<column name="id" not-null="true" default-value="gen_random_uuid()">
+		<type name="uuid" length="0"/>
+	</column>
+	<column name="id_chat" not-null="true">
+		<type name="uuid" length="0"/>
+	</column>
+	<column name="id_sender" not-null="true">
+		<type name="uuid" length="0"/>
+	</column>
+	<column name="text" not-null="true">
+		<type name="text" length="0"/>
+	</column>
+	<column name="reply_to_message_id">
+		<type name="uuid" length="0"/>
+	</column>
+	<column name="created_at" not-null="true" default-value="now()">
+		<type name="timestamptz" length="0"/>
+	</column>
+	<column name="updated_at" not-null="true" default-value="now()">
+		<type name="timestamptz" length="0"/>
+	</column>
+	<constraint name="messages_pk" type="pk-constr" table="public.messages">
+		<columns names="id" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<table name="message_read" layers="0" collapse-mode="2" max-obj-count="3" z-value="0">
+	<schema name="public"/>
+	<role name="postgres"/>
+	<position x="640" y="640"/>
+	<column name="id_message" not-null="true">
+		<type name="uuid" length="0"/>
+	</column>
+	<column name="id_user" not-null="true">
+		<type name="uuid" length="0"/>
+	</column>
+	<column name="read_at" not-null="true" default-value="now()">
+		<type name="timestamptz" length="0"/>
+	</column>
+	<constraint name="message_read_pk" type="pk-constr" table="public.message_read">
+		<columns names="id_message,id_user" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<table name="user_chat" layers="0" collapse-mode="2" max-obj-count="12" z-value="0">
+	<schema name="public"/>
+	<role name="postgres"/>
+	<position x="580" y="80"/>
+	<column name="id_user" not-null="true">
+		<type name="uuid" length="0"/>
+	</column>
+	<column name="id_chat" not-null="true">
+		<type name="uuid" length="0"/>
+	</column>
+	<column name="role" not-null="true" default-value="'MEMBER'">
+		<type name="varchar" length="20"/>
+	</column>
+	<column name="is_muted" not-null="true" default-value="false">
+		<type name="boolean" length="0"/>
+	</column>
+	<column name="is_archived" not-null="true" default-value="false">
+		<type name="boolean" length="0"/>
+	</column>
+	<column name="left_at">
+		<type name="timestamptz" length="0"/>
+	</column>
+	<column name="joined_at" not-null="true" default-value="now()">
+		<type name="timestamptz" length="0"/>
+	</column>
+	<column name="created_at" not-null="true" default-value="now()">
+		<type name="timestamptz" length="0"/>
+	</column>
+	<column name="updated_at" not-null="true" default-value="now()">
+		<type name="timestamptz" length="0"/>
+	</column>
+	<column name="deleted_at">
+		<type name="timestamptz" length="0"/>
+	</column>
+	<constraint name="user_chat_pk" type="pk-constr" table="public.user_chat">
+		<columns names="id_user,id_chat" ref-type="src-columns"/>
+	</constraint>
+	<constraint name="chk_user_chat_role" type="ck-constr" table="public.user_chat">
+			<expression> <![CDATA[role IN ('OWNER', 'ADMIN', 'MEMBER')]]> </expression>
+	</constraint>
+</table>
+
+<index name="index_user_first_name" table="public.users"
+	 concurrent="false" unique="false" fast-update="false" buffering="false" nulls-not-distinct="false"
+	 index-type="btree" factor="0">
+		<idxelement use-sorting="false">
+			<column name="first_name"/>
+		</idxelement>
+		<idxelement use-sorting="false">
+			<column name="last_name"/>
+		</idxelement>
+</index>
+
+<index name="idx_user_chat_id_user_id_chat" table="public.user_chat"
+	 concurrent="false" unique="false" fast-update="false" buffering="false" nulls-not-distinct="false"
+	 index-type="btree" factor="0">
+		<idxelement use-sorting="false">
+			<column name="id_chat"/>
+		</idxelement>
+		<idxelement use-sorting="false">
+			<column name="id_user"/>
+		</idxelement>
+</index>
+
+<index name="idx_chat_name" table="public.chat"
+	 concurrent="false" unique="false" fast-update="false" buffering="false" nulls-not-distinct="false"
+	 index-type="btree" factor="0">
+		<idxelement use-sorting="false">
+			<column name="name"/>
+		</idxelement>
+</index>
+
+<index name="idx_messages_chat_created_at" table="public.messages"
+	 concurrent="false" unique="false" fast-update="false" buffering="false" nulls-not-distinct="false"
+	 index-type="btree" factor="0">
+		<idxelement use-sorting="false">
+			<column name="id_sender"/>
+		</idxelement>
+		<idxelement use-sorting="false">
+			<column name="id_chat"/>
+		</idxelement>
+</index>
+
+<index name="idx_messages_sender" table="public.messages"
+	 concurrent="false" unique="false" fast-update="false" buffering="false" nulls-not-distinct="false"
+	 index-type="btree" factor="0">
+		<idxelement use-sorting="false">
+			<column name="id_sender"/>
+		</idxelement>
+</index>
+
+<index name="idx_message_read_user" table="public.message_read"
+	 concurrent="false" unique="false" fast-update="false" buffering="false" nulls-not-distinct="false"
+	 index-type="btree" factor="0">
+		<idxelement use-sorting="false">
+			<column name="id_user"/>
+		</idxelement>
+</index>
+
+<constraint name="FK_ID_USER_CREATED_USERS" type="fk-constr" comparison-type="MATCH SIMPLE"
+	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="public.users" table="public.chat">
+	<columns names="id_user_created_by" ref-type="src-columns"/>
+	<columns names="id" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="FK_MESSAGES_CHAT" type="fk-constr" comparison-type="MATCH SIMPLE"
+	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="public.chat" table="public.messages">
+	<columns names="id_chat" ref-type="src-columns"/>
+	<columns names="id" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="FK_ID_SENDER_USER" type="fk-constr" comparison-type="MATCH SIMPLE"
+	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="public.users" table="public.messages">
+	<columns names="id_sender" ref-type="src-columns"/>
+	<columns names="id" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="FK_REPLY_MESSAGE_MESSAGES" type="fk-constr" comparison-type="MATCH SIMPLE"
+	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="public.messages" table="public.messages">
+	<columns names="reply_to_message_id" ref-type="src-columns"/>
+	<columns names="id" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="FK_MESSAGES_USER_CHAT" type="fk-constr" comparison-type="MATCH SIMPLE"
+	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="public.user_chat" table="public.messages">
+	<columns names="id_chat,id_sender" ref-type="src-columns"/>
+	<columns names="id_chat,id_user" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="FK_USER_ID_MESSAGE_READ" type="fk-constr" comparison-type="MATCH SIMPLE"
+	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="public.users" table="public.message_read">
+	<columns names="id_user" ref-type="src-columns"/>
+	<columns names="id" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="FK_ID_MESSAGE_MESSAGES" type="fk-constr" comparison-type="MATCH SIMPLE"
+	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="public.messages" table="public.message_read">
+	<columns names="id_message" ref-type="src-columns"/>
+	<columns names="id" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="FK_USERS_USER_CHAT" type="fk-constr" comparison-type="MATCH SIMPLE"
+	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="public.users" table="public.user_chat">
+	<columns names="id_user" ref-type="src-columns"/>
+	<columns names="id" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="FK_CHAT_USER_CHAT" type="fk-constr" comparison-type="MATCH SIMPLE"
+	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="public.chat" table="public.user_chat">
+	<columns names="id_chat" ref-type="src-columns"/>
+	<columns names="id" ref-type="dst-columns"/>
+</constraint>
+
+<relationship name="rel_user_chat_users" type="relfk" layers="0"
+	 src-table="public.user_chat"
+	 dst-table="public.users" reference-fk="FK_USERS_USER_CHAT"
+	 src-required="false" dst-required="true"/>
+
+<relationship name="rel_user_chat_chat" type="relfk" layers="0"
+	 src-table="public.user_chat"
+	 dst-table="public.chat" reference-fk="FK_CHAT_USER_CHAT"
+	 src-required="false" dst-required="true"/>
+
+<relationship name="rel_messages_chat" type="relfk" layers="0"
+	 src-table="public.messages"
+	 dst-table="public.chat" reference-fk="FK_MESSAGES_CHAT"
+	 src-required="false" dst-required="true"/>
+
+<relationship name="rel_messages_users" type="relfk" layers="0"
+	 src-table="public.messages"
+	 dst-table="public.users" reference-fk="FK_ID_SENDER_USER"
+	 src-required="false" dst-required="true"/>
+
+<relationship name="rel_message_read_users" type="relfk" layers="0"
+	 src-table="public.message_read"
+	 dst-table="public.users" reference-fk="FK_USER_ID_MESSAGE_READ"
+	 src-required="false" dst-required="true"/>
+
+<relationship name="rel_message_read_messages" type="relfk" layers="0"
+	 src-table="public.message_read"
+	 dst-table="public.messages" reference-fk="FK_ID_MESSAGE_MESSAGES"
+	 src-required="false" dst-required="true"/>
+
+<relationship name="rel_chat_users" type="relfk" layers="0"
+	 src-table="public.chat"
+	 dst-table="public.users" reference-fk="FK_ID_USER_CREATED_USERS"
+	 src-required="false" dst-required="true"/>
+
+<relationship name="rel_messages_messages" type="relfk" layers="0"
+	 src-table="public.messages"
+	 dst-table="public.messages" reference-fk="FK_REPLY_MESSAGE_MESSAGES"
+	 src-required="false" dst-required="true">
+	<line>
+		<position x="519.242" y="647.108"/>
+	<position x="519.242" y="507"/>
+	<position x="357.494" y="507"/>
+	</line>
+</relationship>
+
+<relationship name="rel_messages_user_chat" type="relfk" layers="0"
+	 src-table="public.messages"
+	 dst-table="public.user_chat" reference-fk="FK_MESSAGES_USER_CHAT"
+	 src-required="false" dst-required="true"/>
+
+</dbmodel>
