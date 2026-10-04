@@ -5,7 +5,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 -->
 <dbmodel pgmodeler-ver="1.2.3" use-changelog="false" max-obj-count="10"
 	 gen-disabled-objs-code="false" show-sys-schemas-rects="true"
-	 last-position="0,71" last-zoom="0.75"
+	 last-position="0,35" last-zoom="0.6"
 	 default-schema="public" default-owner="postgres"
 	 layers="Default layer"
 	 active-layers="0"
@@ -18,7 +18,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 <schema name="public" layers="0" fill-color="#e1e1e1" name-color="#000000" sql-disabled="true">
 </schema>
 
-<table name="users" layers="0" collapse-mode="2" max-obj-count="12" z-value="0">
+<table name="users" layers="0" collapse-mode="2" max-obj-count="13" z-value="0">
 	<schema name="public"/>
 	<role name="postgres"/>
 	<position x="100" y="120"/>
@@ -51,6 +51,9 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	</column>
 	<column name="deleted_at">
 		<type name="timestamptz" length="0"/>
+	</column>
+	<column name="password" not-null="true">
+		<type name="varchar" length="200"/>
 	</column>
 	<constraint name="users_pk" type="pk-constr" table="public.users">
 		<columns names="id" ref-type="src-columns"/>

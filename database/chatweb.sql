@@ -9,7 +9,7 @@
 
 -- object: new_database | type: DATABASE --
 -- DROP DATABASE IF EXISTS new_database;
-CREATE DATABASE new_database;
+CREATE DATABASE chat_web;
 -- ddl-end --
 
 
@@ -29,6 +29,7 @@ CREATE TABLE public.users (
 	created_at timestamptz NOT NULL DEFAULT now(),
 	updated_at timestamptz NOT NULL DEFAULT now(),
 	deleted_at timestamptz,
+	password varchar(200) NOT NULL,
 	CONSTRAINT users_pk PRIMARY KEY (id),
 	CONSTRAINT "UQ_EMAIL" UNIQUE (email),
 	CONSTRAINT "UQ_PHONE_NUMBER" UNIQUE (phone_number)

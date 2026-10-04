@@ -1,0 +1,16 @@
+name: chat-web
+
+services:
+  postgres-db:
+    image: postgres:18
+    environment:
+      POSTGRES_PASSWORD: "U^X2F4DWKmfO5%05oGK6"
+      POSTGRES_USER: chat_web_user
+      POSTGRES_DB: chat_web
+    ports:
+      - "5432:5432"
+    volumes:
+      - datos_db:/var/lib/postgresql
+
+volumes:
+  datos_db:
